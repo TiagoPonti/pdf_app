@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import UploadFile, HTTPException
-import models, schemas
-from config import Settings
+from . import models, schemas
+from .config import Settings
 from botocore.exceptions import NoCredentialsError, BotoCoreError
 
 

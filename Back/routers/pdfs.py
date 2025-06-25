@@ -1,9 +1,9 @@
 from typing import List
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
-import schemas
-import crud
-from database import SessionLocal
+from .. import schemas
+from .. import crud
+from ..database import SessionLocal
 from uuid import uuid4
 
 router = APIRouter(prefix="/pdfs")

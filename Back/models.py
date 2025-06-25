@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, LargeBinary, Integer, Text
-from database import Base
+from .database import Base
 
 class PDF(Base):
     __tablename__ = "pdfs"
