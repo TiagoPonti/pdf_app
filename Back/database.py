@@ -4,17 +4,19 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv() # Asegúrate de que esta línea esté al principio
 
-#SQLALCHEMY_DATABASE_URL = f"postgresql://{os.environ['DATABASE_USER']}:@{os.environ['DATABASE_HOST']}/{os.environ['DATABASE_NAME']}"
+# Leemos la URL completa directamente desde las variables de entorno
+SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL")
 
-user = os.environ['DATABASE_USER']
-password = os.environ['DATABASE_PASSWORD']
-host = os.environ['DATABASE_HOST']
-port = os.environ['DATABASE_PORT']
-db_name = os.environ['DATABASE_NAME']
+# Una pequeña comprobación para evitar errores
+if SQLALCHEMY_DATABASE_URL is None:
+    raise ValueError("La variable de entorno DATABASE_URL no está definida.")
 
-SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
+# Si la URL viene de Render, a veces usa 'postgres://' que SQLAlchemy prefiere como 'postgresql://'
+if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
+    SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL
